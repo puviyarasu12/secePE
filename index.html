@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Inspiration Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideIn 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .quote-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: slideIn 1s ease-out;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card:nth-child(1) { animation-delay: 0.1s; }
+        .quote-card:nth-child(2) { animation-delay: 0.2s; }
+        .quote-card:nth-child(3) { animation-delay: 0.3s; }
+        .quote-card:nth-child(4) { animation-delay: 0.4s; }
+        .quote-card:nth-child(5) { animation-delay: 0.5s; }
+        .quote-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .quote-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .quote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .quote-card:hover::before {
+            left: 100%;
+        }
+
+        .quote-text {
+            font-size: 1.3em;
+            color: white;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-text::before {
+            content: '"';
+            font-size: 2em;
+            color: rgba(255,255,255,0.3);
+            position: absolute;
+            top: -10px;
+            left: -20px;
+        }
+
+        .quote-text::after {
+            content: '"';
+            font-size: 2em;
+            color: rgba(255,255,255,0.3);
+            position: absolute;
+            bottom: -30px;
+            right: -10px;
+        }
+
+        .quote-author {
+            color: #4ecdc4;
+            font-weight: bold;
+            font-size: 1.1em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .anime-character {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .random-quote-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .random-quote-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+        }
+
+        .featured-quote {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            animation: slideIn 1s ease-out 0.7s both;
+        }
+
+        .featured-quote .quote-text {
+            font-size: 1.6em;
+            margin-bottom: 25px;
+        }
+
+        .featured-quote .quote-author {
+            font-size: 1.3em;
+            color: #45b7d1;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .quotes-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .quote-card {
+                padding: 20px;
+            }
+            
+            .quote-text {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>✨ Anime Inspiration Hub ✨</h1>
+            <p class="subtitle">Discover wisdom from beloved anime characters</p>
+        </div>
+
+        <div class="quotes-grid">
+            <div class="quote-card">
+                <div class="anime-character">🌟</div>
+                <div class="quote-text">The future belongs to those who believe in the beauty of their dreams.</div>
+                <div class="quote-author">— Inspired by Shounen Spirit</div>
+            </div>
+
+            <div class="quote-card">
+                <div class="anime-character">⚡</div>
+                <div class="quote-text">Hard work is what makes dreams come true.</div>
+                <div class="quote-author">— Training Arc Wisdom</div>
+            </div>
+
+            <div class="quote-card">
+                <div class="anime-character">🔥</div>
+                <div class="quote-text">Don't give up! There's no shame in falling down. True shame is to not stand up again!</div>
+                <div class="quote-author">— Warrior's Creed</div>
+            </div>
+
+            <div class="quote-card">
+                <div class="anime-character">🌸</div>
+                <div class="quote-text">Sometimes you need to accept that some people are part of your history, but not part of your destiny.</div>
+                <div class="quote-author">— Slice of Life Reflection</div>
+            </div>
+
+            <div class="quote-card">
+                <div class="anime-character">⭐</div>
+                <div class="quote-text">The moment you think of giving up, think of the reason why you held on so long.</div>
+                <div class="quote-author">— Hero's Journey</div>
+            </div>
+
+            <div class="quote-card">
+                <div class="anime-character">🌙</div>
+                <div class="quote-text">We are all like fireworks: we climb, shine, and always go our separate ways and become further apart.</div>
+                <div class="quote-author">— Melancholy Wisdom</div>
+            </div>
+        </div>
+
+        <button class="random-quote-btn" onclick="showRandomQuote()">Get Random Inspiration</button>
+
+        <div class="featured-quote" id="featuredQuote">
+            <div class="anime-character">💫</div>
+            <div class="quote-text">Click the button above to discover new wisdom!</div>
+            <div class="quote-author">— Your Journey Awaits</div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 100;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Array of additional inspirational quotes
+        const additionalQuotes = [
+            {
+                text: "It's not the face that makes someone a monster, it's the choices they make with their lives.",
+                author: "Inner Strength Philosophy",
+                icon: "👹"
+            },
+            {
+                text: "If you don't like your destiny, don't accept it. Instead, have the courage to change it the way you want it to be.",
+                author: "Destiny Changer's Motto",
+                icon: "⚔️"
+            },
+            {
+                text: "Power comes in response to a need, not a desire. You have to create that need.",
+                author: "Power Development Theory",
+                icon: "💪"
+            },
+            {
+                text: "The world isn't perfect. But it's there for us, doing the best it can. That's what makes it so damn beautiful.",
+                author: "World Appreciation",
+                icon: "🌍"
+            },
+            {
+                text: "Fear is not evil. It tells you what weakness is. And once you know your weakness, you can become stronger.",
+                author: "Courage Building",
+                icon: "🦁"
+            },
+            {
+                text: "Life is like a pencil that will surely run out, but will leave the beautiful writing of life.",
+                author: "Life's Canvas",
+                icon: "✏️"
+            }
+        ];
+
+        function showRandomQuote() {
+            const randomQuote = additionalQuotes[Math.floor(Math.random() * additionalQuotes.length)];
+            const featuredQuote = document.getElementById('featuredQuote');
+            
+            // Add fade out effect
+            featuredQuote.style.opacity = '0';
+            featuredQuote.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                featuredQuote.innerHTML = `
+                    <div class="anime-character">${randomQuote.icon}</div>
+                    <div class="quote-text">${randomQuote.text}</div>
+                    <div class="quote-author">— ${randomQuote.author}</div>
+                `;
+                
+                // Fade back in
+                featuredQuote.style.opacity = '1';
+                featuredQuote.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // Initialize stars when page loads
+        window.onload = function() {
+            createStars();
+        }
+
+        // Add floating animation to quote cards on scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.quote-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * -0.5;
+                    card.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
